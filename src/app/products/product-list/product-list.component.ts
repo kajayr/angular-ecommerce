@@ -12,6 +12,7 @@ export class ProductListComponent implements OnInit {
   imageMargin: number = 2;
   isImageRequired: boolean = false;
   imgBtnText: string = 'Show';
+  userRating:string = "";
 
   private _listFilter:string = "";
   get listFilter():string{
@@ -20,11 +21,23 @@ export class ProductListComponent implements OnInit {
   set listFilter(value:string){
     this._listFilter = value;
     console.log("in setter: ", value);
+    this.filteredProducts = this.performFilter(value);
   }
+
+  filteredProducts: IProducts[] = [];
 
   toggleImage() {
     this.isImageRequired = !this.isImageRequired;
   }
+  performFilter(filterBy: string): IProducts[]{
+    filterBy = filterBy.toLowerCase();
+    return this.products.filter((product: IProducts) => product.productName.toLocaleLowerCase().includes(filterBy))
+  }
+
+  onNotify(userRating: string){
+  this.userRating = userRating;
+  }
+
   products: IProducts[] = [
     {
       productId: 1,

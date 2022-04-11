@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="card-header">{{pageTitle}}</div>
+  <div class="card-header">{{pageTitle}} {{userRating}}</div>
   <div class="card-body">
     <div class="row">
       <div class="col-md-2">Filter by:</div>
@@ -27,7 +27,7 @@
           </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let product of products">
+            <tr *ngFor="let product of filteredProducts">
                 <td>
                     <img *ngIf="isImageRequired" [style.width.px]="imageWidth" [style.margin.px]="imageMargin" [src]="product.imageUrl" [alt]="product.productName">
                 </td>
@@ -35,7 +35,7 @@
                 <td>{{product.productCode | convertToSpaces: '-' | lowercase}}</td>
                 <td>{{product.releaseDate}}</td>
                 <td>{{product.price | currency}}</td>
-                <td>{{product.starRating}}</td>
+                <td><pm-star [rating] = "product.starRating" (notify)="onNotify($event)"></pm-star></td>
             </tr>
         </tbody>
       </table>
